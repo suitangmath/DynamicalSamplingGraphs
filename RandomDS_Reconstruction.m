@@ -18,7 +18,8 @@ if ~exist(SAVE_DIR,'dir')
 end
 
 %% Get example parameters
-Example           =  Community1_def();  
+%%% choose examples
+Example           =  Community1_def(); % other choice include Bunny_def, Sensor_def, etc in Exampls folder
 sysInfo           =  Example.sysInfo;
 obsInfo           =  Example.obsInfo;
 samplingInfo      =  Example.samplingInfo;
@@ -29,25 +30,25 @@ obsInfo.SAVE_DIR  =  SAVE_DIR;
 
 
 %% Construct 10 bandlimited signals
-N = sysInfo.N;
-tau = obsInfo.tau;
-bwidth = sysInfo.bwidth;
+N = sysInfo.N; % number of nodes
+tau = obsInfo.tau; % observation times 
+bwidth = sysInfo.bwidth;% bandwidth of signal 
 [V,D] = eigs(sysInfo.A,sysInfo.N); % get eigenbasis and eigenvalues
 
-trials =10;
+trials =10; % number of learning trials 
 result =cell(trials,1);
 
-% total number of samples
+% total number of space-time samples
 samples = 200;
 
-sigmaset = 0;
+sigmaset = 0;% noise 
 %sigmaset= 5*1e-2;
-gammaset =10.^(-3:0.2:2);
+gammaset =10.^(-3:0.2:2); % regularization parameters
 
 
-errors1 = zeros(length(sigmaset),length(gammaset),3);
-errors2 = zeros(length(sigmaset),length(gammaset),3);
-errors3 = zeros(length(sigmaset),length(gammaset),3);
+errors1 = zeros(length(sigmaset),length(gammaset),3); % reconstruction error for regime 1
+errors2 = zeros(length(sigmaset),length(gammaset),3);% reconstruction error for regime 2
+errors3 = zeros(length(sigmaset),length(gammaset),3); % reconstruction error for regime 3
 
     
     
